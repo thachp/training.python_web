@@ -141,15 +141,19 @@ a kitten</li>
 <h1>Getting Virtualenv</h1>
 <p>Three options for installing virtualenv (this is the exception to the above
 rule):</p>
-<ul class="incremental simple">
+<ul class="incremental small simple">
 <li><tt class="docutils literal">pip install virtualenv</tt></li>
 <li><tt class="docutils literal">easy_install virtualenv</tt></li>
 </ul>
 <p class="incremental">You must have <tt class="docutils literal">pip</tt> or <tt class="docutils literal">easy_install</tt> installed.  Try this:</p>
+<pre class="incremental small literal-block">
+$ curl -O \
+https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.11.tar.gz
+$ tar -xzvf virtualenv-1.11.tar.gz
+</pre>
 <ul class="incremental simple">
-<li>download <tt class="docutils literal"><span class="pre">https://raw.github.com/pypa/virtualenv/master/virtualenv.py</span></tt></li>
 <li>remember where it goes.  You'll need it</li>
-<li>there is a copy in the class resources (<tt class="docutils literal">common</tt>)</li>
+<li>there is a copy in the class resources (<tt class="docutils literal">resources/common</tt>)</li>
 </ul>
 </div>
 <div class="slide" id="creating-a-virtualenv">
@@ -165,10 +169,10 @@ $ virtualenv [options] &lt;ENV&gt;
 arbitrary. Let's make one for our BeautifulSoup install:</p>
 <pre class="literal-block">
 $ python virtualenv.py soupenv
-New python executable in soupenv/bin/python2.6
-New python executable in soupenv/bin/python
-Installing setuptools........................done.
-Installing pip...................done.
+Using real prefix '/Users/cewing/newpythons/parts/opt'
+New python executable in soupenv26/bin/python2.6
+Also creating executable in soupenv26/bin/python
+Installing setuptools, pip...done.
 </pre>
 </div>
 </div>
@@ -198,7 +202,7 @@ $ source soupenv/bin/activate
 &gt; \path\to\soupenv\Scripts\activate
 </pre>
 <p class="image-credit">If you use Powershell, read the note here:
-<a class="reference external" href="http://www.virtualenv.org/en/latest/#activate-script">http://www.virtualenv.org/en/latest/#activate-script</a></p>
+<a class="reference external" href="http://www.virtualenv.org/en/latest/virtualenv.html#activate-script">http://www.virtualenv.org/en/latest/virtualenv.html#activate-script</a></p>
 </div>
 <div class="slide" id="install-beautifulsoup">
 <h1>Install BeautifulSoup</h1>
@@ -256,7 +260,7 @@ source:</p>
 <p class="incremental">By going to the website and playing with the form there, we can derive a
 formula for a search URL</p>
 <ul class="incremental simple">
-<li>Base URL: <tt class="docutils literal"><span class="pre">http://raleigh.craigslist.org/search/apa</span></tt></li>
+<li>Base URL: <tt class="docutils literal"><span class="pre">http://seattle.craigslist.org/search/apa</span></tt></li>
 <li>keywords: <tt class="docutils literal">query=keyword+values+here</tt></li>
 <li>price: <tt class="docutils literal">minAsk=NNN maxAsk=NNN</tt></li>
 <li>bedrooms: <tt class="docutils literal">bedrooms=N</tt> (N in range 1-8)</li>
@@ -289,7 +293,7 @@ formula for a search URL</p>
 <li><tt class="docutils literal">response.headers</tt>: The headers sent from the server</li>
 <li><tt class="docutils literal">response.text</tt>: Body of the response, decoded to unicode</li>
 <li><tt class="docutils literal">response.encoding</tt>: The encoding used to decode</li>
-<li><tt class="docutils literal">response.content</tt>: The original response body as bytes</li>
+<li><tt class="docutils literal">response.content</tt>: The original encoded response body as bytes</li>
 </ul>
 <p class="incremental small"><tt class="docutils literal">requests documentation</tt>: <a class="reference external" href="http://docs.python-requests.org/en/latest/">http://docs.python-requests.org/en/latest/</a></p>
 </div>
@@ -311,17 +315,19 @@ formula for a search URL</p>
 <pre class="code python small incremental literal-block">
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="k">def</span> <span class="nf">fetch_search_results</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">base</span> <span class="o">=</span> <span class="s">'http://raleigh.craigslist.org/search/apa'</span>
-    <span class="n">valid_kws</span> <span class="o">=</span> <span class="p">(</span><span class="s">'query'</span><span class="p">,</span> <span class="s">'minAsk'</span><span class="p">,</span> <span class="s">'maxAsk'</span><span class="p">,</span> <span class="s">'bedrooms'</span><span class="p">)</span>
-    <span class="n">use_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-        <span class="p">[(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">valid_kws</span><span class="p">])</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">use_kwargs</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">fetch_search_results</span><span class="p">(</span>
+    <span class="n">query</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">minAsk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">maxAsk</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bedrooms</span><span class="o">=</span><span class="bp">None</span>
+<span class="p">):</span>
+    <span class="n">incoming</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="s">'http://seattle.craigslist.org/search/apa'</span>
+    <span class="n">search_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="p">[(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">incoming</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">search_params</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;No valid keywords&quot;</span><span class="p">)</span>
 
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">use_kwargs</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">search_params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span> <span class="c">#&lt;- no-op if status==200</span>
-    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">encoding</span>
+    <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">encoding</span>
 </pre>
 </div>
 <div class="slide" id="parse-the-results">
@@ -389,8 +395,9 @@ print parsed.prettify()
 <p>Try to come up with the proper code on your own.  Add it to <tt class="docutils literal">mashup.py</tt></p>
 <pre class="code python incremental small literal-block">
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'minAsk'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s">'maxAsk'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">'bedrooms'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-    <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">fetch_search_results</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">fetch_search_results</span><span class="p">(</span>
+        <span class="n">minAsk</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">maxAsk</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">bedrooms</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">doc</span><span class="o">.</span><span class="n">prettify</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
 </pre>
@@ -399,28 +406,29 @@ print parsed.prettify()
 <h1>Test Your Work</h1>
 <p>Assuming your virtualenv is still active, you should be able to execute the
 script.</p>
-<pre class="incremental small literal-block">
+<pre class="incremental literal-block">
 (soupenv)$ python mashup.py
 &lt;!DOCTYPE html&gt;
 &lt;html class=&quot;nojs&quot;&gt;
  &lt;head&gt;
   &lt;title&gt;
-   raleigh apts/housing for rent classifieds  - craigslist
+   seattle apts/housing for rent classifieds  - craigslist
   &lt;/title&gt;
 ...
 </pre>
-<div class="incremental container">
+</div>
+<div class="slide" id="preserve-the-results">
+<h1>Preserve the Results</h1>
 <p>Try it again, this time redirect the output to a local file, so we can use
 it without needing to hit the craiglist servers each time:</p>
-<pre class="small literal-block">
+<pre class="literal-block">
 (soupenv)$ python mashup.py &gt; craigslist_results.html
 </pre>
-</div>
 </div>
 <div class="slide" id="finding-the-needle">
 <h1>Finding The Needle</h1>
 <p>Next we find the bits of this pile of HTML that matter to us.</p>
-<p class="incremental">Open your html file in a browser and take a look.</p>
+<p class="incremental">Open your html file in a browser and take a look (w/ dev tools).</p>
 <p class="incremental">We'll want to find:</p>
 <ul class="incremental simple">
 <li>The HTML element that contains a single listing</li>
@@ -469,7 +477,7 @@ parsed.find_all('p', class_='row')
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parsed</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">listings</span> <span class="o">=</span> <span class="n">parsed</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'p'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'row'</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">listings</span><span class="p">)</span>
 <span class="mi">100</span>
 </pre>
 <p class="incremental">That sounds about right. Let's see if we can get only those with location
@@ -514,7 +522,7 @@ data.</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">row1</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'data-latitude'</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">row1</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'data-longitude'</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span>
-<span class="mf">35.8625743108992</span> <span class="o">-</span><span class="mf">78.6232739959049</span>
+<span class="mf">46.9989830869194</span> <span class="o">-</span><span class="mf">122.847250593816</span>
 </pre>
 </div>
 </div>
@@ -543,19 +551,19 @@ that matches the filters you provide.</p>
 </div>
 <div class="slide" id="extracting-price-and-size">
 <h1>Extracting Price and Size</h1>
-<p>Both price and size are held in the <tt class="docutils literal">pnr</tt> span:</p>
+<p>Both price and size are held in the <tt class="docutils literal">l2</tt> span:</p>
 <pre class="code python small literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">pnr</span> <span class="o">=</span> <span class="n">row1</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'span'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'pnr'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">row1</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'span'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'l2'</span><span class="p">)</span>
 </pre>
 <div class="incremental container">
 <p>Price, conveniently, is in it's own container:</p>
 <pre class="code python small literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">price_span</span> <span class="o">=</span> <span class="n">pnr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'span'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'price'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">price_span</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'span'</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s">'price'</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">price</span> <span class="o">=</span> <span class="n">price_span</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 </pre>
 </div>
 <p class="incremental">But the size element is not. It is a standalone <em>text node</em>.</p>
-<p class="incremental">Try finding it by reading the <tt class="docutils literal">string</tt> property of our <cite>pnr</cite> tag.</p>
+<p class="incremental">Try finding it by reading the <tt class="docutils literal">string</tt> property of our <tt class="docutils literal">l2</tt> tag.</p>
 </div>
 <div class="slide" id="simple-navigation-and-text">
 <h1>Simple Navigation and Text</h1>
@@ -565,8 +573,8 @@ that matches the filters you provide.</p>
 <p>We already have the <tt class="docutils literal">price</tt> span, the size text node is next at the same
 level:</p>
 <pre class="code python small literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">size</span> <span class="o">=</span> <span class="n">price</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">' </span><span class="se">\n</span><span class="s">-/'</span><span class="p">)</span>
-<span class="s">u'2br - 1160ft</span><span class="se">\xb2</span><span class="s">'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">size</span> <span class="o">=</span> <span class="n">price_span</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">' </span><span class="se">\n</span><span class="s">-/'</span><span class="p">)</span>
+<span class="s">u'2br - 912ft</span><span class="se">\xb2</span><span class="s">'</span>
 </pre>
 </div>
 <p class="incremental">You may have noticed that we keep using <tt class="docutils literal">strip</tt>. There are two reasons for
@@ -580,7 +588,7 @@ this.</p>
 <div class="incremental container">
 <p>They are actually instances of a class called <tt class="docutils literal">NavigableString</tt>:</p>
 <pre class="code python small literal-block">
-<span class="o">&gt;&gt;&gt;</span> <span class="n">price</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">__class__</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">price_span</span><span class="o">.</span><span class="n">next_sibling</span><span class="o">.</span><span class="n">__class__</span>
 <span class="o">&lt;</span><span class="k">class</span> <span class="err">'</span><span class="nc">bs4</span><span class="o">.</span><span class="n">element</span><span class="o">.</span><span class="n">NavigableString</span><span class="s">'&gt;</span>
 </pre>
 </div>
@@ -636,11 +644,12 @@ printing the result</p>
 <h1>My Solution</h1>
 <pre class="code python small literal-block">
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">'minAsk'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span> <span class="s">'maxAsk'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s">'bedrooms'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-    <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">fetch_search_results</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">html</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="n">fetch_search_results</span><span class="p">(</span>
+        <span class="n">minAsk</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">maxAsk</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">bedrooms</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
     <span class="n">doc</span> <span class="o">=</span> <span class="n">parse_source</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">listing</span> <span class="ow">in</span> <span class="n">extract_listings</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
-        <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">listing</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">listing</span>
 </pre>
 </div>
 <div class="slide" id="another-approach">
@@ -831,7 +840,7 @@ end of this session.</p>
 <tt class="docutils literal">json.dump(fp)</tt> and <tt class="docutils literal">json.load(fp)</tt> (note the missing 's')</p>
 <p class="incremental">Remember duck-typing. Anything with a <tt class="docutils literal">.write</tt> and a <tt class="docutils literal">.read</tt> method is
 <em>file-like</em></p>
-<p class="incremental">Have we seen any network-related classes recently that behave that way?</p>
+<p class="incremental">This usage can be much more memory-friendly with large files/sources</p>
 </div>
 <div class="slide" id="what-about-wsdl">
 <h1>What about WSDL?</h1>
@@ -949,7 +958,7 @@ be present in every response</em>.</p>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">json</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">url</span> <span class="o">=</span> <span class="s">'http://maps.googleapis.com/maps/api/geocode/json'</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">addr</span> <span class="o">=</span> <span class="s">'120 E. Cameron Avenue Chapel Hill, NC 27599'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">addr</span> <span class="o">=</span> <span class="s">'1325 4th Ave, Seattle, 98101'</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">'address'</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s">'sensor'</span><span class="p">:</span> <span class="s">'false'</span> <span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -963,7 +972,7 @@ be present in every response</em>.</p>
 back address information:</p>
 <pre class="code python small literal-block">
 <span class="o">&gt;&gt;&gt;</span> <span class="n">location</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'results'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'geometry'</span><span class="p">][</span><span class="s">'location'</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">latlng</span> <span class="o">=</span> <span class="s">'</span><span class="si">%f</span><span class="s">,</span><span class="si">%f</span><span class="s">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">location</span><span class="p">[</span><span class="s">'lat'</span><span class="p">],</span> <span class="n">location</span><span class="p">[</span><span class="s">'lng'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">latlng</span><span class="o">=</span><span class="s">&quot;{lat},{lng}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">location</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s">'latlng'</span><span class="p">:</span> <span class="n">latlng</span><span class="p">,</span> <span class="s">'sensor'</span><span class="p">:</span> <span class="s">'false'</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">paramters</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -995,10 +1004,10 @@ to least.</p>
 <span class="k">def</span> <span class="nf">add_address</span><span class="p">(</span><span class="n">listing</span><span class="p">):</span>
     <span class="n">api_url</span> <span class="o">=</span> <span class="s">'http://maps.googleapis.com/maps/api/geocode/json'</span>
     <span class="n">loc</span> <span class="o">=</span> <span class="n">listing</span><span class="p">[</span><span class="s">'location'</span><span class="p">]</span>
+    <span class="n">latlng_tmpl</span> <span class="o">=</span> <span class="s">&quot;{data-latitude},{data-longitude}&quot;</span>
     <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'sensor'</span><span class="p">:</span> <span class="s">'false'</span><span class="p">,</span>
-        <span class="s">'latlng'</span><span class="p">:</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">loc</span><span class="p">[</span><span class="s">'data-latitude'</span><span class="p">],</span>
-                             <span class="n">loc</span><span class="p">[</span><span class="s">'data-longitude'</span><span class="p">])</span>
+        <span class="s">'latlng'</span><span class="p">:</span> <span class="n">latlng_tmpl</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">loc</span><span class="p">),</span>
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -1139,12 +1148,37 @@ and SOAP, I have provided exercises in each as an addenda to this session. If
 you have the time and the interest, please try them out.</p>
 <p class="center"><a class="reference external" href="session03-addenda.html">Web Service API Addenda</a></p>
 </div>
-<div class="slide" id="next-steps">
-<h1>Next Steps</h1>
-<p>We've spent this session consuming data produced by other people.</p>
-<p class="incremental">In the next session we'll see how to take input from clients and use it to
-create our own responses.</p>
-<p class="incremental">See you back here soon!</p>
+<div class="slide" id="homework">
+<h1>Homework</h1>
+<p>For your homework this week, you'll be creating a mashup of your own.</p>
+<p class="incremental">Use the programmable web api directory from above as a source of inspiration.</p>
+<p class="incremental">Your mashup should combine at least two sources of data in some way that
+tickles your fancy.</p>
+<p class="incremental">Your results need not look pretty. Focus on data acquisition and processing.</p>
+</div>
+<div class="slide" id="submitting-your-homework">
+<h1>Submitting Your Homework</h1>
+<p>To submit your homework:</p>
+<ul>
+<li><p class="first">Create a new python script in <tt class="docutils literal">assignments/session03</tt>. It should be
+something I can run with:</p>
+<pre class="literal-block">
+$ python your_script.py
+</pre>
+</li>
+<li><p class="first">Provide me with a text file describing what you did. Tell me about the
+sources you use, how you combine them, what you hoped to achieve.</p>
+</li>
+<li><p class="first">Include any instruction I might need to successfully run your script.</p>
+</li>
+<li><p class="first">Commit your changes to your fork of the repo in github, then open a pull
+request.</p>
+</li>
+</ul>
+</div>
+<div class="slide" id="extra-credit">
+<h1>Extra Credit</h1>
+<p>Bonus points if you write unit tests for the elements of your mashup.</p>
 </div>
 </div>
 </body>

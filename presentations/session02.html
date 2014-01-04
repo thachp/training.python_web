@@ -487,21 +487,42 @@ Content-Type: text/html; charset=UTF-8
 <h1>HTTP In Real Life</h1>
 <p>Let's investigate the HTTP protocol a bit in real life.</p>
 <p class="incremental">We'll do so by building a simplified HTTP server, one step at a time.</p>
-<p class="incremental">We'll bootstrap ourselves by using the <tt class="docutils literal">echo_server.py</tt> file we created
-earlier.</p>
-<p class="incremental">Make a copy of that file now.  Call it <tt class="docutils literal">http_server_1.py</tt>.  Open it in your
-text editors.</p>
+<p class="incremental">There is a copy of the echo server from last time in <tt class="docutils literal">resources/session02</tt>.
+It's called <tt class="docutils literal">http_server.py</tt>.</p>
+<p class="incremental">In a terminal, move into that directory. We'll be doing our work here for the
+rest of the session</p>
+</div>
+<div class="slide" id="tdd-irl-a-quick-aside">
+<h1>TDD IRL (a quick aside)</h1>
+<p>Test Driven Development (TDD) is all the rage these days.</p>
+<p class="incremental">It means that before you write code, you first write tests demonstrating what
+you want your code to do.</p>
+<p class="incremental">When all your tests pass, you are finished. You did this for your last
+assignment.</p>
+<p class="incremental">We'll be doing it again today.</p>
+</div>
+<div class="slide" id="run-the-tests">
+<h1>Run the Tests</h1>
+<p>From inside <tt class="docutils literal">resources/session02</tt> start a second python interpreter and run
+<tt class="docutils literal">$ python http_server.py</tt></p>
+<div class="incremental container">
+<p>In your first interpreter run the tests. You should see similar output:</p>
+<pre class="small literal-block">
+$ python tests.py
+[...]
+Ran 10 tests in 0.003s
+
+FAILED (failures=3, errors=7)
+</pre>
+</div>
+<p class="incremental">Let's take a few minutes here to look at these tests and understand them.</p>
 </div>
 <div class="slide" id="viewing-an-http-request">
 <h1>Viewing an HTTP Request</h1>
-<p>In a terminal, start your server running, like so:</p>
-<pre class="literal-block">
-$ python http_server_1.py
-making a server on 127.0.0.1:10000
-waiting for a connection
-</pre>
-<p class="incremental">This time, instead of using your echo client to make a connection, let's use
-a web browser</p>
+<p>Our job is to make all those tests pass.</p>
+<p class="incremental">First, though, let's pretend this server really is a functional HTTP server.</p>
+<p class="incremental">This time, instead of using the echo client to make a connection to the
+server, let's use a web browser!</p>
 <p class="incremental">Point your favorite browser at <tt class="docutils literal"><span class="pre">http://localhost:10000</span></tt></p>
 </div>
 <div class="slide" id="a-bad-interaction">
@@ -527,21 +548,41 @@ Cookie: __utma=111872281.383966302.1364503233.1364503233.1364503233.1; __utmz=11
 Connection: keep-alive
 Cache-Control: max-age=0
 </pre>
-<p class="incremental small">Your results will vary from mine.</p>
+<p class="incremental">Your results will vary from mine.</p>
 </div>
 <div class="slide" id="http-debugging">
 <h1>HTTP Debugging</h1>
 <p>When working on applications, it's nice to be able to see all this going back
-and forth.  There are several apps that can help with this:</p>
+and forth.</p>
+<div class="incremental container">
+<p>Good browsers support this with a set of developer tools built-in.</p>
+<ul class="small incremental simple">
+<li>firefox -&gt; ctrl-shift-K or cmd-opt-K (os X)</li>
+<li>safari -&gt; enable in preferences:advanced then cmd-opt-i</li>
+<li>chrome -&gt; ctrl-shift-i or cmd-opt-i (os X)</li>
+<li>IE (7.0+) -&gt; F12 or tools menu -&gt; developer tools</li>
+</ul>
+</div>
+<p class="incremental">The 'Net(work)' pane of these tools can show you both request and response,
+headers and all. Very useful.</p>
+</div>
+<div class="slide" id="stop-demo-time">
+<h1>Stop! Demo Time</h1>
+<p class="big-centered">Let's take a quick look</p>
+</div>
+<div class="slide" id="other-debugging-options">
+<h1>Other Debugging Options</h1>
+<p>Sometimes you need or want to debug http requests that are not going through
+your browser.</p>
+<p class="incremental">Or perhaps you need functionality that is not supported by in-browser tools
+(request munging, header mangling, decryption of https request/responses)</p>
+<div class="incremental container">
+<p>Then it might be time for an HTTP debugging proxy:</p>
 <ul class="simple">
 <li>windows: <a class="reference external" href="http://www.fiddler2.com/fiddler2/">http://www.fiddler2.com/fiddler2/</a></li>
-<li>firefox: <a class="reference external" href="http://getfirebug.com/">http://getfirebug.com/</a></li>
-<li>safari: built in</li>
-<li>chrome: built in</li>
-<li>IE (7.0+): built in</li>
+<li>win/osx/linux: <a class="reference external" href="http://www.charlesproxy.com/">http://www.charlesproxy.com/</a></li>
 </ul>
-<p class="incremental">These tools can show you both request and response, headers and all. Very
-useful.</p>
+</div>
 </div>
 <div class="slide" id="http-requests">
 <h1>HTTP Requests</h1>
@@ -573,16 +614,19 @@ this is a pretty minimal response
 </div>
 <div class="slide" id="basic-http-protocol">
 <h1>Basic HTTP Protocol</h1>
-<p>Begin by implementing a new function in your <tt class="docutils literal">http_server_1.py</tt> script called
+<p>Begin by implementing a new function in your <tt class="docutils literal">http_server.py</tt> script called
 <cite>response_ok</cite>.</p>
 <p class="incremental">It can be super-simple for now.  We'll improve it later.</p>
-<p class="incremental">It needs to return our minimal response from above:</p>
-<pre class="small incremental literal-block">
+<div class="incremental container">
+<p>It needs to return our minimal response from above:</p>
+<pre class="small literal-block">
 HTTP/1.1 200 OK
 Content-Type: text/plain
 &lt;CRLF&gt;
 this is a pretty minimal response
 </pre>
+</div>
+<p class="incremental small"><strong>Remember, &lt;CRLF&gt; is a placeholder for an intentionally blank line</strong></p>
 </div>
 <div class="slide" id="my-solution">
 <h1>My Solution</h1>
@@ -597,16 +641,32 @@ this is a pretty minimal response
     <span class="k">return</span> <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
 </pre>
 </div>
+<div class="slide" id="id22">
+<h1>Run The Tests</h1>
+<p>We've now implemented a function that is tested by our tests. Let's run them
+again:</p>
+<pre class="incremental small literal-block">
+$ python tests.py
+[...]
+----------------------------------------------------------------------
+Ran 10 tests in 0.002s
+
+FAILED (failures=3, errors=3)
+</pre>
+<p class="incremental">Great!  We've now got 4 tests that pass.  Good work.</p>
+</div>
 <div class="slide" id="server-modifications">
 <h1>Server Modifications</h1>
 <p>Next, we need to rebuild the server loop from our echo server for it's new
 purpose:</p>
-<p class="incremental">It should be able to return a response built by our function when a request
-is finished</p>
-<p class="incremental">We could also bump up the buffer size to something more reasonable for HTTP
-traffic, say 1024</p>
+<p class="incremental">It should now wait for an incoming request to be <em>finished</em>, <em>then</em> send a
+response back to the client.</p>
+<p class="incremental">The response it sends can be the result of calling our new <tt class="docutils literal">response_ok</tt>
+function for now.</p>
+<p class="incremental">We could also bump up the <tt class="docutils literal">recv</tt> buffer size to something more reasonable
+for HTTP traffic, say 1024.</p>
 </div>
-<div class="slide" id="id22">
+<div class="slide" id="id23">
 <h1>My Solution</h1>
 <pre class="code python incremental small literal-block">
 <span class="c"># ...</span>
@@ -629,13 +689,24 @@ traffic, say 1024</p>
 <span class="c"># ...</span>
 </pre>
 </div>
-<div class="slide" id="test-your-work">
-<h1>Test Your Work</h1>
+<div class="slide" id="id24">
+<h1>Run The Tests</h1>
 <p>Once you've got that set, restart your server:</p>
 <pre class="literal-block">
-$ python http_server_1.py
+$ python http_server.py
 </pre>
-<p class="incremental">reload your browser pointing to <tt class="docutils literal"><span class="pre">http://localhost:10000</span></tt> and watch the magic!</p>
+<div class="incremental container">
+<p>Then you can re-run your tests:</p>
+<pre class="small literal-block">
+$ python tests.py
+[...]
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+FAILED (failures=2, errors=3)
+</pre>
+</div>
+<p class="incremental">Five tests now pass!</p>
 </div>
 <div class="slide" id="parts-of-a-request">
 <h1>Parts of a Request</h1>
@@ -668,7 +739,7 @@ GET /path/to/index.html HTTP/1.1
 <li>There are others, notably HEAD, but you won't see them too much</li>
 </ul>
 </div>
-<div class="slide" id="id23">
+<div class="slide" id="id25">
 <h1>HTTP Methods</h1>
 <p>These four methods are mapped to the four basic steps (<em>CRUD</em>) of persistent
 storage:</p>
@@ -705,8 +776,8 @@ they might change something on the server:</p>
 </ul>
 <p class="incremental">This is a <em>normative</em> distinction, which is to say <strong>be careful</strong></p>
 </div>
-<div class="slide" id="methods-idempoent">
-<h1>Methods: Idempoent &lt;--&gt; ???</h1>
+<div class="slide" id="methods-idempotent">
+<h1>Methods: Idempotent &lt;--&gt; ???</h1>
 <p>HTTP methods can be categorized as <strong>idempotent</strong>, based on whether a given
 request will always have the same result:</p>
 <ul class="incremental">
@@ -740,12 +811,12 @@ respond to it: <tt class="docutils literal">parse_request</tt>.</p>
 <p class="incremental">Remember, although a request is more than one line long, all we care about
 here is the first line</p>
 </div>
-<div class="slide" id="id24">
+<div class="slide" id="id26">
 <h1>My Solution</h1>
 <pre class="code python incremental literal-block">
 <span class="k">def</span> <span class="nf">parse_request</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">first_line</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">method</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">first_line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">protocol</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">first_line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">method</span> <span class="o">!=</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;We only accept GET&quot;</span><span class="p">)</span>
     <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'request is okay'</span>
@@ -760,7 +831,7 @@ here is the first line</p>
 <li>send an OK response if things go well</li>
 </ul>
 </div>
-<div class="slide" id="id25">
+<div class="slide" id="id27">
 <h1>My Solution</h1>
 <pre class="code python incremental small literal-block">
 <span class="c"># ...</span>
@@ -783,14 +854,30 @@ here is the first line</p>
 <span class="c"># ...</span>
 </pre>
 </div>
-<div class="slide" id="id26">
-<h1>Test Your Work</h1>
+<div class="slide" id="id28">
+<h1>Run The Tests</h1>
+<p>Quit and restart your server now that you've updated the code:</p>
+<pre class="literal-block">
+$ python http_server.py
+</pre>
+<div class="incremental container">
+<p>At this point, we should have seven tests passing:</p>
+<pre class="small literal-block">
+$ python tests.py
+Ran 10 tests in 0.002s
+
+FAILED (failures=1, errors=2)
+</pre>
+</div>
+</div>
+<div class="slide" id="what-about-a-browser">
+<h1>What About a Browser?</h1>
 <p>Quit and restart your server, now that you've updated the code.</p>
 <p class="incremental">Reload your browser.  It should work fine.</p>
-<p class="incremental">We can use the <tt class="docutils literal">echo_client.py</tt> script from yesterday to test our error
+<p class="incremental">We can use the <tt class="docutils literal">simple_client.py</tt> script in our resources to test our error
 condition.  In a second terminal window run the script like so:</p>
 <pre class="incremental literal-block">
-$ python echo_client.py &quot;POST / HTTP/1.0\r\n\r\n&quot;
+$ python simple_client.py &quot;POST / HTTP/1.0\r\n\r\n&quot;
 </pre>
 <p class="incremental">You'll have to quit the client pretty quickly with <tt class="docutils literal"><span class="pre">ctrl-c</span></tt></p>
 </div>
@@ -838,7 +925,7 @@ are a lot of them for a reason. See
 <p class="incremental">Let's add a new function that returns this error code. It should be called
 <tt class="docutils literal">response_method_not_allowed</tt></p>
 </div>
-<div class="slide" id="id27">
+<div class="slide" id="id29">
 <h1>My Solution</h1>
 <pre class="code python incremental literal-block">
 <span class="k">def</span> <span class="nf">response_method_not_allowed</span><span class="p">():</span>
@@ -859,7 +946,7 @@ correctly.  It should</p>
 <li>if no exception is raised, then return the OK response</li>
 </ul>
 </div>
-<div class="slide" id="id28">
+<div class="slide" id="id30">
 <h1>My Solution</h1>
 <pre class="code python incremental small literal-block">
 <span class="c"># ...</span>
@@ -881,18 +968,20 @@ correctly.  It should</p>
 <span class="c"># ...</span>
 </pre>
 </div>
-<div class="slide" id="id29">
-<h1>Test Your Work</h1>
+<div class="slide" id="id31">
+<h1>Run The Tests</h1>
 <p>Start your server (or restart it if by some miracle it's still going).</p>
-<p class="incremental">Then test this out by using the <tt class="docutils literal">echo_client.py</tt> script again:</p>
-<pre class="incremental literal-block">
-$ python echo_client.py &quot;POST / HTTP/1.1\r\n\r\n&quot;
-connecting to localhost port 10000
-sending &quot;POST / HTTP/1.1\r\n\r\n&quot;
-received &quot;HTTP/1.1 405 Met&quot;
-received &quot;hod Not Allowed
-closing socket
+<div class="incremental container">
+<p>Then run the tests again:</p>
+<pre class="small literal-block">
+$ python tests.py
+[...]
+Ran 10 tests in 0.002s
+
+OK
 </pre>
+</div>
+<p class="incremental">Wahoo! All our tests are passing. That means we are done writing code for now.</p>
 </div>
 <div class="slide" id="http-resources">
 <h1>HTTP - Resources</h1>
@@ -911,7 +1000,7 @@ http://localhost:10000/section/page?
 </pre>
 </div>
 </div>
-<div class="slide" id="id30">
+<div class="slide" id="id32">
 <h1>HTTP - Resources</h1>
 <p>We expect different urls to result in different responses.</p>
 <p class="incremental">But this isn't happening with our server, for obvious reasons.</p>
@@ -939,169 +1028,40 @@ be returned</p>
 </li>
 </ul>
 </div>
-<div class="slide" id="responding-to-uris">
-<h1>Responding to URIs</h1>
-<p>We should expand our server's capabilities so that it can make different
-responses to different URIs.</p>
-<p class="incremental">To simplify things for ourselves, let's allow our server to serve up
-directories and files from our own filesystem.</p>
-<p class="incremental">This will be much like other common HTTP servers, like Apache or nginx.</p>
-<p class="incremental">Save your <tt class="docutils literal">http_server_1.py</tt> module as <tt class="docutils literal">http_server_2.py</tt>. If you've
-fallen behind, you can find a copy of <tt class="docutils literal">http_server_2.py</tt> in the class
-resources folder.</p>
+<div class="slide" id="homework">
+<h1>Homework</h1>
+<p>For your homework this week you will expand your server's capabilities so that
+it can make different responses to different URIs.</p>
+<p class="incremental">You'll allow your server to serve up directories and files from your own
+filesystem.</p>
+<p class="incremental">You'll be starting from the <tt class="docutils literal">http_server.py</tt> script that is currently in the
+<tt class="docutils literal">assignments/session02</tt> directory. It should be pretty much the same as what
+you've created here.</p>
 </div>
-<div class="slide" id="getting-a-uri">
-<h1>Getting a URI</h1>
-<p>First, let's update our <tt class="docutils literal">parse_request</tt> method so that it returns the URI it
-parses from the first line of our request:</p>
-<pre class="code python small incremental literal-block">
-<span class="k">def</span> <span class="nf">parse_request</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">first_line</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">method</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">first_line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">!=</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;We only accept GET&quot;</span><span class="p">)</span>
-    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'serving request for </span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">uri</span>
-    <span class="k">return</span> <span class="n">uri</span>
-</pre>
-<p class="incremental">Next, we need to write a function that handles this uri for us:
-<tt class="docutils literal">resolve_uri</tt>.</p>
-</div>
-<div class="slide" id="what-should-it-do">
-<h1>What Should It Do?</h1>
-<p>Let's think for a bit about the specs for our function:</p>
+<div class="slide" id="one-step-at-a-time">
+<h1>One Step At A Time</h1>
+<p>Take the following steps one at a time. Run the tests in
+<tt class="docutils literal">assignments/session02</tt> between to ensure that you are getting it right.</p>
 <ul class="incremental simple">
-<li>It should take a URI as the sole argument</li>
-<li>It should use the pathname represented by the URI as a search path for a
-filesystem location</li>
-<li>It should have a 'home directory', someplace that serves as the root of the
-search path.</li>
-<li>If the URI represents a directory, the method should return a directory
-listing</li>
-<li>If the URI represents a file of some sort, the method should return the
-contents of that file.</li>
-<li>If the URI does not map to a real location, it should raise an exception.</li>
+<li>Update <tt class="docutils literal">parse_request</tt> to return the URI it parses from the request.</li>
+<li>Update <tt class="docutils literal">response_ok</tt> so that it uses the resource and mimetype identified
+by the URI.</li>
+<li>Write a new function <tt class="docutils literal">resolve_uri</tt> that handles looking up resources on
+disk using the URI.</li>
+<li>Write a new function <tt class="docutils literal">response_not_found</tt> that returns a 404 response if the
+resource does not exist.</li>
 </ul>
-</div>
-<div class="slide" id="id31">
-<h1>My Solution</h1>
-<pre class="code python small incremental literal-block">
-<span class="c"># at the top of the file:</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="c"># add this function</span>
-<span class="k">def</span> <span class="nf">resolve_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return the filesystem resources identified by 'uri'&quot;&quot;&quot;</span>
-    <span class="n">home</span> <span class="o">=</span> <span class="s">'webroot'</span> <span class="c"># this is relative to the location of</span>
-                     <span class="c"># the server script, could be a full path</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="n">uri</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">'/'</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">contents</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">contents</span><span class="p">:</span>
-    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">listing</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">listing</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Not Found&quot;</span><span class="p">)</span>
-</pre>
-</div>
-<div class="slide" id="returning-content">
-<h1>Returning Content</h1>
-<p>Now we have to do something with the return value of that function.</p>
-<p class="incremental">The value should be returned to the client as a response.</p>
-<p class="incremental">Let's update our <tt class="docutils literal">response_ok</tt> function to incorporate this stuff.</p>
-<p class="incremental">Remember, this new material is the <em>body</em> of our response.</p>
-</div>
-<div class="slide" id="id32">
-<h1>My Solution</h1>
-<pre class="code python incremental literal-block">
-<span class="k">def</span> <span class="nf">response_ok</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;returns a basic HTTP response&quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;HTTP/1.1 200 OK&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Content-Type: text/plain&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-</pre>
-</div>
-<div class="slide" id="handling-the-error">
-<h1>Handling The Error</h1>
-<p>Our <tt class="docutils literal">resolve_uri</tt> function also adds a new possible error condition, one
-that maps nicely to a common HTTP response code.</p>
-<p class="incremental">We'll need a function that generates that response for us</p>
-<pre class="code python small incremental literal-block">
-<span class="k">def</span> <span class="nf">response_not_found</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;return a 404 Not Found response&quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;HTTP/1.1 404 Not Found&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-</pre>
-</div>
-<div class="slide" id="id33">
-<h1>Server Updates</h1>
-<p>Finally, we need to update the code in our server loop to handle this new
-stuff.</p>
-<ul class="incremental simple">
-<li>It should bind the return value of <tt class="docutils literal">parse_request</tt> to a symbol</li>
-<li>It should pass that value in to our new <tt class="docutils literal">resolve_uri</tt> function</li>
-<li>It should bind the return value of that function to another symbol</li>
-<li>It should use that value to build an <tt class="docutils literal">OK</tt> response</li>
-<li>It should return that response to the client via the open connection socket.</li>
-<li>If the ValueError from <tt class="docutils literal">resolve_uri</tt> is raised, it should handle it by
-returning the proper response.</li>
-</ul>
-</div>
-<div class="slide" id="id34">
-<h1>My Solution</h1>
-<pre class="code python small incremental literal-block">
-<span class="c"># ...</span>
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
-    <span class="n">request</span> <span class="o">+=</span> <span class="n">data</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1024</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-        <span class="k">break</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">uri</span> <span class="o">=</span> <span class="n">parse_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">resolve_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_method_not_allowed</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_not_found</span><span class="p">()</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_ok</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'sending response'</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-<span class="c"># ...</span>
-</pre>
-</div>
-<div class="slide" id="id35">
-<h1>Test Your Work</h1>
-<p>To test our new functionality, we need a bit of extra stuff, like a directory
-with interesting material in it.</p>
-<p class="incremental">In the class resources folder, I've provided a suitable directory. It's called
-<tt class="docutils literal">webroot</tt>.</p>
-<p class="incremental">Copy that directory and all its contents into the location where you've been
-creating your server files.</p>
-<p class="incremental">Restart your server: <tt class="docutils literal">$ python http_server_2.py</tt></p>
-</div>
-<div class="slide" id="what-s-missing">
-<h1>What's Missing?</h1>
-<p>Point your browser at <tt class="docutils literal"><span class="pre">http://localhost:10000/</span></tt>.</p>
-<p class="incremental">Try <tt class="docutils literal"><span class="pre">http://localhost:10000/a_web_page.html</span></tt>.</p>
-<p class="incremental">How about <tt class="docutils literal"><span class="pre">http://localhost:10000/images/JPEG_example.jpg</span></tt>?</p>
-<p class="incremental">What's going wrong here?</p>
 </div>
 <div class="slide" id="http-headers">
 <h1>HTTP Headers</h1>
-<p>The problem is that we're identifying <strong>all</strong> the content we return as plain
-text.</p>
+<p>Along the way, you'll discover that simply returning as the body in
+response_ok is insufficient. Different <em>types</em> of content need to be
+identified to your browser</p>
 <p class="incremental">We can fix this by passing information about exactly what we are returning as
 part of the response.</p>
 <p class="incremental">HTTP provides for this type of thing with the generic idea of <em>Headers</em></p>
 </div>
-<div class="slide" id="id36">
+<div class="slide" id="id33">
 <h1>HTTP Headers</h1>
 <p>Both requests and responses can contain <strong>headers</strong> of the form <tt class="docutils literal">Name: Value</tt></p>
 <ul class="incremental simple">
@@ -1143,83 +1103,48 @@ extension to a type:</p>
 </pre>
 </div>
 </div>
-<div class="slide" id="build-a-content-type-header">
-<h1>Build a Content-type Header</h1>
-<p>We'll need to do a couple of things:</p>
+<div class="slide" id="resolving-a-uri">
+<h1>Resolving a URI</h1>
+<p>Your <tt class="docutils literal">resolve_uri</tt> function will need to accomplish the following tasks:</p>
 <ul class="incremental simple">
-<li>Extend the <tt class="docutils literal">resolve_uri</tt> function to return content <em>and</em> mime-type</li>
-<li>Extend the <tt class="docutils literal">response_ok</tt> function to accept both content and mime-type as
-arguments</li>
-<li>Extend the <tt class="docutils literal">response_ok</tt> function to write a <tt class="docutils literal"><span class="pre">Content-Type:</span> XYZ</tt> header</li>
-<li>Adjust the server loop appropriately</li>
+<li>It should take a URI as the sole argument</li>
+<li>It should map the pathname represented by the URI to a filesystem location.</li>
+<li>It should have a 'home directory', and look only in that location.</li>
+<li>If the URI is a directory, it should return a plain-text listing and the
+mimetype <tt class="docutils literal">text/plain</tt>.</li>
+<li>If the URI is a file, it should return the contents of that file and its
+correct mimetype.</li>
+<li>If the URI does not map to a real location, it should raise an exception
+that the server can catch to return a 404 response.</li>
 </ul>
 </div>
-<div class="slide" id="id37">
-<h1>My Solution</h1>
-<p>for <tt class="docutils literal">resolve_uri</tt>:</p>
-<pre class="code python small incremental literal-block">
-<span class="c"># at the top of the file:</span>
-<span class="kn">import</span> <span class="nn">mimetypes</span>
-
-<span class="c"># in the existing function:</span>
-<span class="c"># ...</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">mimetype</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">types_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="s">'text/plain'</span><span class="p">)</span>
-        <span class="n">contents</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">contents</span><span class="p">,</span> <span class="n">mimetype</span>
-    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="n">listing</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">listing</span><span class="p">,</span> <span class="s">'text/plain'</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Not Found&quot;</span><span class="p">)</span>
-</pre>
+<div class="slide" id="use-your-tests">
+<h1>Use Your Tests</h1>
+<p>One of the benefits of test-driven development is that the tests that are
+failing should tell you what code you need to write.</p>
+<p class="incremental">As you work your way through the steps outlined above, look at your tests.
+Write code that makes them pass.</p>
+<p class="incremental">If all the tests in <tt class="docutils literal">assignments/session02/tests.py</tt> are passing, you've
+completed the assignment.</p>
 </div>
-<div class="slide" id="id38">
-<h1>My Solution</h1>
-<p>for <tt class="docutils literal">response_ok</tt>:</p>
-<pre class="code python small incremental literal-block">
-<span class="k">def</span> <span class="nf">response_ok</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;returns a basic HTTP response&quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;HTTP/1.1 200 OK&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Content-Type: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mimetype</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-</pre>
-</div>
-<div class="slide" id="id39">
-<h1>My Solution</h1>
-<p>for the server loop:</p>
-<pre class="code python small incremental literal-block">
-<span class="c"># ...</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">uri</span> <span class="o">=</span> <span class="n">parse_request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-    <span class="n">content</span><span class="p">,</span> <span class="n">mimetype</span> <span class="o">=</span> <span class="n">resolve_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_method_not_allowed</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_not_found</span><span class="p">()</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">response_ok</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'sending response'</span>
-<span class="n">conn</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-<span class="c"># ...</span>
-</pre>
-</div>
-<div class="slide" id="id40">
-<h1>Test Your Work</h1>
-<p>Now, restart your server script and point your browser at various URLs, starting
-from the root (<tt class="docutils literal"><span class="pre">http://localhost:10000/</span></tt>).</p>
-<p class="incremental">Much better results, no?</p>
+<div class="slide" id="submitting-your-homework">
+<h1>Submitting Your Homework</h1>
+<p>To submit your homework:</p>
+<ul class="simple">
+<li>Do your work in the <tt class="docutils literal">assignments/session02</tt> directory of <strong>your fork</strong> of
+the class respository</li>
+<li>When you have all tests passing, push your work to <strong>your fork</strong> in github.</li>
+<li>Using the github web interface, send me a pull request.</li>
+</ul>
+<p class="incremental">I will review your work when I receive your pull requests, make comments on it
+there, and then close the pull request.</p>
 </div>
 <div class="slide" id="a-few-steps-further">
 <h1>A Few Steps Further</h1>
+<p>If you are able to finish the above in less than 4-6 hours, consider taking on
+one or more of the following challenges:</p>
 <ul class="incremental simple">
-<li>Format directory listings as actual HTML, so you can make file names into
-links.</li>
+<li>Format directory listings as HTML, so you can link to files.</li>
 <li>Add a GMT <tt class="docutils literal">Date:</tt> header in the proper format (RFC-1123) to responses.
 <em>hint: see email.utils.formatdate in the python standard library</em></li>
 <li>Add a <tt class="docutils literal"><span class="pre">Content-Length:</span></tt> header for <tt class="docutils literal">OK</tt> responses that provides a
@@ -1229,19 +1154,6 @@ returns a <tt class="docutils literal">500 Internal Server Error</tt> response.<
 <li>Instead of returning the python script in <tt class="docutils literal">webroot</tt> as plain text, execute
 the file and return the results as HTML.</li>
 </ul>
-</div>
-<div class="slide" id="wrap-up">
-<h1>Wrap-Up</h1>
-<p>For comparison, you might wish to take a look at the code in the Python
-Standard Library's <tt class="docutils literal">SocketServer</tt>, <tt class="docutils literal">BaseHTTPServer</tt> and
-<tt class="docutils literal">SimpleHTTPServer</tt> modules:</p>
-<pre class="literal-block">
-&gt;&gt;&gt; import SocketServer, BaseHTTPServer, SimpleHTTPServer
-&gt;&gt;&gt; SocketServer.__file__
-'/full/path/to/your/copy/of/SocketServer.py'
-...
-</pre>
-<p class="incremental center"><strong>See You Tomorrow!</strong></p>
 </div>
 </div>
 </body>

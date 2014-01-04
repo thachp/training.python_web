@@ -47,33 +47,19 @@ building blocks that make it possible.</p>
 <div class="slide" id="but-first">
 <h1>But First</h1>
 <p>Class presentations are available online for your use</p>
-<p><a class="reference external" href="http://github.com/cewing/training.python_web">http://github.com/cewing/training.python_web</a></p>
-<p>Use the <tt class="docutils literal"><span class="pre">week-long-format</span></tt> branch for this class</p>
-<p>Licensed with Creative Commons BY-NC-SA</p>
-<ul class="simple">
+<p class="small"><a class="reference external" href="https://github.com/UWPCE-PythonCert/training.python_web">https://github.com/UWPCE-PythonCert/training.python_web</a></p>
+<p class="incremental">Licensed with Creative Commons BY-NC-SA</p>
+<ul class="small incremental simple">
 <li>You must attribute the work</li>
 <li>You may not use the work for commercial purposes</li>
 <li>You have to share your versions just like this one</li>
 </ul>
-<p>Find mistakes? See improvements? Make a pull request.</p>
+<p class="incremental">Find mistakes? See improvements? Make a pull request.</p>
 </div>
 <div class="slide" id="id1">
 <h1>But First</h1>
-<p>Daily Schedule</p>
-<ul class="simple">
-<li>9:00 am to 10:30 am - Session 1a</li>
-<li>15 minute break</li>
-<li>10:45 am to 12:30 pm - Session 1b</li>
-<li>1 hour lunch</li>
-<li>1:30 pm to 3:00 pm - Session 2a</li>
-<li>15 minute break</li>
-<li>3:15 pm to 5:00 pm - Session 2b</li>
-</ul>
-</div>
-<div class="slide" id="id2">
-<h1>But First</h1>
 <p>Classroom Protocol</p>
-<p class="incremental">Question to ask:</p>
+<p class="incremental">Questions to ask:</p>
 <ul class="incremental simple">
 <li>What did you just say?</li>
 <li>Please explain what we just did again?</li>
@@ -81,21 +67,21 @@ building blocks that make it possible.</p>
 <li>Is that a typo?</li>
 </ul>
 </div>
-<div class="slide" id="id3">
+<div class="slide" id="id2">
 <h1>But First</h1>
 <p>Classroom Protocol</p>
-<p class="incremental">Question <strong>not</strong> to ask:</p>
+<p class="incremental">Questions <strong>not</strong> to ask:</p>
 <ul class="incremental simple">
-<li>Hypotheticals: What happens if I do X?</li>
-<li>Research: Can Python do Y?</li>
-<li>Syllabus: Are we going to cover Z in class?</li>
-<li>Marketing questions: please just don't.</li>
-<li>Performance questions: Is Python fast enough?</li>
-<li>Unpythonic: Why doesn't Python do it some other way?</li>
-<li>Show off: Look what I just did!</li>
+<li><strong>Hypotheticals</strong>: What happens if I do X?</li>
+<li><strong>Research</strong>: Can Python do Y?</li>
+<li><strong>Syllabus</strong>: Are we going to cover Z in class?</li>
+<li><strong>Marketing questions</strong>: please just don't.</li>
+<li><strong>Performance questions</strong>: Is Python fast enough?</li>
+<li><strong>Unpythonic</strong>: Why doesn't Python do it some other way?</li>
+<li><strong>Show off</strong>: Look what I just did!</li>
 </ul>
 </div>
-<div class="slide" id="id4">
+<div class="slide" id="id3">
 <h1>But First</h1>
 <p class="big-centered">Introductions</p>
 </div>
@@ -110,7 +96,7 @@ building blocks that make it possible.</p>
 </ul>
 <p class="image-credit">image: <a class="reference external" href="http://en.wikipedia.org/wiki/Internet_Protocol_Suite">http://en.wikipedia.org/wiki/Internet_Protocol_Suite</a></p>
 </div>
-<div class="slide" id="id5">
+<div class="slide" id="id4">
 <h1>Computer Communications</h1>
 <img alt="img/data_in_tcpip_stack.png" class="align-left" src="img/data_in_tcpip_stack.png" style="width: 55%;" />
 <ul class="incremental simple">
@@ -131,7 +117,7 @@ building blocks that make it possible.</p>
 <li>what that medium is is arbitrary</li>
 </ul>
 </li>
-<li>Primarily uses the Network Interface Card (NIC) in your computer</li>
+<li>Implemented in the Network Interface Card(s) (NIC) in your computer</li>
 </ul>
 </div>
 <div class="slide" id="the-tcp-ip-stack-internet">
@@ -151,7 +137,7 @@ building blocks that make it possible.</p>
 </li>
 </ul>
 </div>
-<div class="slide" id="id6">
+<div class="slide" id="id5">
 <h1>The TCP/IP Stack - Internet</h1>
 <p class="big-centered">That's 4.3 x 10^28 addresses <em>per person alive today</em></p>
 </div>
@@ -176,18 +162,19 @@ building blocks that make it possible.</p>
 </li>
 </ul>
 </div>
-<div class="slide" id="id7">
+<div class="slide" id="id6">
 <h1>The TCP/IP Stack - Transport</h1>
 <p>The 'Transport Layer' also establishes the concept of a <strong>port</strong></p>
 <ul class="incremental simple">
 <li>IP Addresses designate a specific <em>machine</em> on the network</li>
 <li>A <strong>port</strong> provides addressing for individual <em>applications</em> in a single host</li>
 <li>192.168.1.100:80  (the <em>:80</em> part is the <strong>port</strong>)</li>
+<li>[2001:db8:85a3:8d3:1319:8a2e:370:7348]:443 (<em>:443</em> is the <strong>port</strong>)</li>
 </ul>
 <p class="incremental">This means that you don't have to worry about information intended for your
 web browser being accidentally read by your email client.</p>
 </div>
-<div class="slide" id="id8">
+<div class="slide" id="id7">
 <h1>The TCP/IP Stack - Transport</h1>
 <p>There are certain <strong>ports</strong> which are commonly understood to belong to given
 applications or protocols:</p>
@@ -199,15 +186,17 @@ applications or protocols:</p>
 <li>25 - SMTP</li>
 <li>...</li>
 </ul>
+<p class="incremental">These ports are often referred to as <strong>well-known ports</strong></p>
 <p class="small">(see <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers">http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers</a>)</p>
 </div>
-<div class="slide" id="id9">
+<div class="slide" id="id8">
 <h1>The TCP/IP Stack - Transport</h1>
 <p>Ports are grouped into a few different classes</p>
 <ul class="incremental simple">
 <li>Ports numbered 0 - 1023 are <em>reserved</em></li>
 <li>Ports numbered 1024 - 65535 are <em>open</em></li>
-<li>Ports numbered 49152 - 65535 are generally considered <em>ephemeral</em></li>
+<li>Ports numbered 1024 - 49151 may be <em>registered</em></li>
+<li>Ports numbered 49152 - 65535 are called <em>ephemeral</em></li>
 </ul>
 </div>
 <div class="slide" id="the-tcp-ip-stack-application">
@@ -225,7 +214,7 @@ applications or protocols:</p>
 </li>
 </ul>
 </div>
-<div class="slide" id="id10">
+<div class="slide" id="id9">
 <h1>The TCP/IP Stack - Application</h1>
 <p class="big-centered">this is where we live and work</p>
 </div>
@@ -240,23 +229,38 @@ applications or protocols:</p>
 </ul>
 <p class="incremental">A <strong>Socket</strong> is the software representation of that endpoint.</p>
 <p class="incremental">Opening a <strong>socket</strong> creates a kind of transceiver that can send and/or
-receive data at a given IP address and Port.</p>
+receive <em>bytes</em> at a given IP address and Port.</p>
 </div>
 <div class="slide" id="sockets-in-python">
 <h1>Sockets in Python</h1>
 <p>Python provides a standard library module which provides socket functionality.
-It is called <strong>socket</strong>.  Let's spend a few minutes getting to know this
-module.</p>
-<p>We're going to do this next part together, so open up a terminal and start a
+It is called <strong>socket</strong>.</p>
+<p class="incremental">The library is really just a very thin wrapper around the system
+implementation of <em>BSD Sockets</em></p>
+<p class="incremental">Let's spend a few minutes getting to know this module.</p>
+<p class="incremental">We're going to do this next part together, so open up a terminal and start a
 python interpreter</p>
+</div>
+<div class="slide" id="id10">
+<h1>Sockets in Python</h1>
+<p>The Python sockets library allows us to find out what port a <em>service</em> uses:</p>
+<pre class="small doctest-block">
+&gt;&gt;&gt; import socket
+&gt;&gt;&gt; socket.getservbyname('ssh')
+22
+</pre>
+<p class="incremental">You can also do a <em>reverse lookup</em>, finding what service uses a given <em>port</em>:</p>
+<pre class="incremental small doctest-block">
+&gt;&gt;&gt; socket.getservbyport(80)
+'http'
+</pre>
 </div>
 <div class="slide" id="id11">
 <h1>Sockets in Python</h1>
-<p>The sockets library provides tools for finding out information about hosts on
-the network. For example, you can find out about the machine you are currently
-using:</p>
+<p>The sockets library also provides tools for finding out information about
+<em>hosts</em>. For example, you can find out about the hostname and IP address of
+the machine you are currently using:</p>
 <pre class="literal-block">
-&gt;&gt;&gt; import socket
 &gt;&gt;&gt; socket.gethostname()
 'heffalump.local'
 &gt;&gt;&gt; socket.gethostbyname(socket.gethostname())
@@ -270,8 +274,8 @@ know their hostname. For example:</p>
 <pre class="literal-block">
 &gt;&gt;&gt; socket.gethostbyname('google.com')
 '173.194.33.4'
-&gt;&gt;&gt; socket.gethostbyname('unc.edu')
-'152.19.240.120'
+&gt;&gt;&gt; socket.gethostbyname('uw.edu')
+'128.95.155.135'
 &gt;&gt;&gt; socket.gethostbyname('crisewing.com')
 '108.59.11.99'
 </pre>
@@ -327,13 +331,15 @@ single argument, the shared prefix for a defined set of constants:</p>
 <pre class="small literal-block">
 &gt;&gt;&gt; def get_constants(prefix):
 ...     &quot;&quot;&quot;mapping of socket module constants to their names.&quot;&quot;&quot;
-...     return dict( (getattr(socket, n), n)
-...                  for n in dir(socket)
-...                  if n.startswith(prefix)
-...                  )
+...     return dict(
+...         (getattr(socket, n), n)
+...         for n in dir(socket)
+...         if n.startswith(prefix)
+...     )
 ...
 &gt;&gt;&gt;
 </pre>
+<p class="small">(you can also find this in <tt class="docutils literal">resources/session01/session1.py</tt>)</p>
 </div>
 <div class="slide" id="socket-families">
 <h1>Socket Families</h1>
@@ -343,7 +349,7 @@ stack.  There were a couple of different types of IP addresses:</p>
 <li>IPv4 ('192.168.1.100')</li>
 <li>IPv6 ('2001:0db8:85a3:0042:0000:8a2e:0370:7334')</li>
 </ul>
-<p class="incremental">The <em>family</em> of a socket corresponds to the addressing system it uses for
+<p class="incremental">The <strong>family</strong> of a socket corresponds to the <em>addressing system</em> it uses for
 connecting.</p>
 </div>
 <div class="slide" id="id16">
@@ -376,6 +382,7 @@ machine __or__ across the network</li>
 <h1>Test your skills</h1>
 <p>What is the <em>default</em> family for the socket we created just a moment ago?</p>
 <p class="incremental">(remember we bound the socket to the symbol <tt class="docutils literal">foo</tt>)</p>
+<p class="incremental center">How did you figure this out?</p>
 </div>
 <div class="slide" id="socket-types">
 <h1>Socket Types</h1>
@@ -387,8 +394,8 @@ machine __or__ across the network</li>
 {1: 'SOCK_STREAM', 2: 'SOCK_DGRAM',
  ...}
 </pre>
-<p class="incremental">The most common are <tt class="docutils literal">1</tt> (TCP type communication) and <tt class="docutils literal">2</tt> (UDP type
-communication).</p>
+<p class="incremental">The most common are <tt class="docutils literal">1</tt> (Stream communication (TCP)) and <tt class="docutils literal">2</tt> (Datagram
+communication (UDP)).</p>
 </div>
 <div class="slide" id="id17">
 <h1>Test your skills</h1>
@@ -406,17 +413,20 @@ prefixed by <tt class="docutils literal">IPPROTO_</tt>:</p>
  255: 'IPPROTO_RAW'}
 </pre>
 <p class="incremental">The choice of which protocol to use for a socket is determined by the
-communications protocol you intend to use.  <tt class="docutils literal">IP</tt>? <tt class="docutils literal">ICMP</tt>? <tt class="docutils literal">UDP</tt>?</p>
+<em>internet layer</em> protocol you intend to use. <tt class="docutils literal">TCP</tt>? <tt class="docutils literal">UPD</tt>? <tt class="docutils literal">ICMP</tt>?
+<tt class="docutils literal">IGMP</tt>?</p>
 </div>
 <div class="slide" id="id18">
 <h1>Test your skills</h1>
 <p>What is the <em>default</em> protocol used by our generic socket, <tt class="docutils literal">foo</tt>?</p>
 </div>
-<div class="slide" id="address-information">
-<h1>Address Information</h1>
-<p>These three properties of a socket correspond to the three positional arguments
-you may pass to the constructor.  This allows you to create sockets that have
-specific communications profiles:</p>
+<div class="slide" id="custom-sockets">
+<h1>Custom Sockets</h1>
+<p>These three properties of a socket correspond to the three positional
+arguments you may pass to the socket constructor.</p>
+<div class="incremental container">
+<p>Using them allows you to create sockets with specific communications
+profiles:</p>
 <pre class="literal-block">
 &gt;&gt;&gt; bar = socket.socket(socket.AF_INET,
 ...                     socket.SOCK_DGRAM,
@@ -426,17 +436,37 @@ specific communications profiles:</p>
 &lt;socket._socketobject object at 0x1005b8b40&gt;
 </pre>
 </div>
+</div>
+<div class="slide" id="break-time">
+<h1>Break Time</h1>
+<p>So far we have:</p>
+<ul class="incremental simple">
+<li>learned about the &quot;layers&quot; of the TCP/IP Stack</li>
+<li>discussed <em>families</em>, <em>types</em> and <em>protocols</em> in sockets</li>
+<li>learned how to create sockets with a specific communications profile.</li>
+</ul>
+<p class="incremental">When we return we'll learn how to find the communcations profiles of remote
+sockets, how to connect to them, and how to send and receive messages.</p>
+<p class="incremental">Take a few minutes now to clear your head (do not quit your python
+interpreter).</p>
+</div>
+<div class="slide" id="address-information">
+<h1>Address Information</h1>
+<p>When you are creating a socket to communicate with a remote service, the
+remote socket will have a specific communications profile.</p>
+<p class="incremental">The local socket you create must match that communications profile.</p>
+<p class="incremental">How can you determine the <em>correct</em> values to use?</p>
+<p class="incremental center">You ask.</p>
+</div>
 <div class="slide" id="id19">
 <h1>Address Information</h1>
-<p>But when you are creating a socket to communicate with a remote service, how
-can you determine the <em>correct</em> values to use?</p>
-<p class="incremental">You ask.</p>
-</div>
-<div class="slide" id="client-connections">
-<h1>Client Connections</h1>
-<p>The information returned by a call to <tt class="docutils literal">socket.getaddrinfo</tt> is all you need
-to make a proper connection to a socket on a remote host.  The value returned
-is a tuple of</p>
+<p>The function <tt class="docutils literal">socket.getaddrinfo</tt> provides information about available
+connections on a given host.</p>
+<pre class="code python small literal-block">
+<span class="n">socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="s">'127.0.0.1'</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+</pre>
+<p class="incremental">This provides all you need to make a proper connection to a socket on a remote
+host. The value returned is a tuple of:</p>
 <ul class="incremental simple">
 <li>socket family</li>
 <li>socket type</li>
@@ -448,7 +478,7 @@ is a tuple of</p>
 <div class="slide" id="id20">
 <h1>A quick utility method</h1>
 <p>Again, let's create a utility method in-place so we can see this in action:</p>
-<pre class="literal-block">
+<pre class="small literal-block">
 &gt;&gt;&gt; def get_address_info(host, port):
 ...     for response in socket.getaddrinfo(host, port):
 ...         fam, typ, pro, nam, add = response
@@ -461,10 +491,11 @@ is a tuple of</p>
 ...
 &gt;&gt;&gt;
 </pre>
+<p class="small">(you can also find this in <tt class="docutils literal">resources/session01/session1.py</tt>)</p>
 </div>
 <div class="slide" id="on-your-own-machine">
 <h1>On Your Own Machine</h1>
-<p>Now, ask your own machine what services are available on 'http':</p>
+<p>Now, ask your own machine what possible connections are available for 'http':</p>
 <pre class="literal-block">
 &gt;&gt;&gt; get_address_info(socket.gethostname(), 'http')
 family:  AF_INET
@@ -502,7 +533,7 @@ type:  SOCK_STREAM
 <h1>Construct a Socket</h1>
 <p>We've already made a socket <tt class="docutils literal">foo</tt> using the generic constructor without any
 arguments.  We can make a better one now by using real address information from
-a real server online:</p>
+a real server online [<strong>do not type this yet</strong>]:</p>
 <pre class="small literal-block">
 &gt;&gt;&gt; streams = [info
 ...     for info in socket.getaddrinfo('crisewing.com', 'http')
@@ -530,7 +561,7 @@ a real server online:</p>
 <div class="slide" id="sending-a-message">
 <h1>Sending a Message</h1>
 <p>Send a message to the server on the other end of our connection (we'll
-learn is session 2 about the message we are sending):</p>
+learn in session 2 about the message we are sending):</p>
 <pre class="literal-block">
 &gt;&gt;&gt; msg = &quot;GET / HTTP/1.1\r\n&quot;
 &gt;&gt;&gt; msg += &quot;Host: crisewing.com\r\n\r\n&quot;
@@ -542,13 +573,14 @@ learn is session 2 about the message we are sending):</p>
 <li>success returns <tt class="docutils literal">None</tt></li>
 <li>failure to send raises an error</li>
 <li>you can use the type of error to figure out why the transmission failed</li>
-<li>you <strong>cannot</strong> know how much, if any, of your data was sent</li>
+<li>if an error occurs you <strong>cannot</strong> know how much, if any, of your data was
+sent</li>
 </ul>
 </div>
 <div class="slide" id="receiving-a-reply">
 <h1>Receiving a Reply</h1>
 <p>Whatever reply we get is received by the socket we created. We can read it
-back out:</p>
+back out (again, <strong>do not type this yet</strong>):</p>
 <pre class="literal-block">
 &gt;&gt;&gt; response = cewing_socket.recv(4096)
 &gt;&gt;&gt; response
@@ -557,7 +589,7 @@ back out:</p>
 </pre>
 <ul class="incremental small simple">
 <li>The sole required argument is <tt class="docutils literal">buffer_size</tt> (an integer). It should be a
-power of 2 and smallish</li>
+power of 2 and smallish (~4096)</li>
 <li>It returns a byte string of <tt class="docutils literal">buffer_size</tt> (or smaller if less data was
 received)</li>
 <li>If the response is longer than <tt class="docutils literal">buffer size</tt>, you can call the method
@@ -603,19 +635,6 @@ repeatedly. The last bunch will be less than <tt class="docutils literal">buffer
 19427
 </pre>
 </div>
-<div class="slide" id="break-time">
-<h1>Break Time</h1>
-<p>So far we have:</p>
-<ul class="incremental simple">
-<li>learned about the &quot;layers&quot; of the TCP/IP Stack</li>
-<li>discussed <em>families</em>, <em>types</em> and <em>protocols</em> in sockets</li>
-<li>learned some API for finding out how to connect to a remote server</li>
-<li>made our first connection to a server</li>
-<li>and sent and received our first messages through a socket.</li>
-</ul>
-<p class="incremental">Not bad for a Monday morning.</p>
-<p class="incremental">Let's take 10 minutes and return to learn about the other end of this wire.</p>
-</div>
 <div class="slide" id="server-side">
 <h1>Server Side</h1>
 <p class="big-centered">What about the other half of the equation?</p>
@@ -630,7 +649,7 @@ this time, we get to choose family, type and protocol:</p>
 &gt;&gt;&gt; server_socket = socket.socket(
 ...     socket.AF_INET,
 ...     socket.SOCK_STREAM,
-...     socket.IPPROTO_IP)
+...     socket.IPPROTO_TCP)
 ...
 &gt;&gt;&gt; server_socket
 &lt;socket._socketobject object at 0x100563c90&gt;
@@ -657,27 +676,26 @@ connections:</p>
 </pre>
 <ul class="incremental simple">
 <li>The argument to <tt class="docutils literal">listen</tt> is the <em>backlog</em></li>
-<li>The <em>backlog</em> is the <strong>maximum</strong> number of connections that the socket will
-queue</li>
-<li>Once the limit is reached, the socket refuses new connections</li>
+<li>The <em>backlog</em> is the <strong>maximum</strong> number of connection requests that the
+socket will queue</li>
+<li>Once the limit is reached, the socket refuses new connections.</li>
 </ul>
 </div>
 <div class="slide" id="accept-incoming-messages">
 <h1>Accept Incoming Messages</h1>
-<p>When a socket is listening, it can receive incoming messages:</p>
+<p>When a socket is listening, it can receive incoming connection requests:</p>
 <pre class="literal-block">
 &gt;&gt;&gt; connection, client_address = server_socket.accept()
 ... # this blocks until a client connects
 &gt;&gt;&gt; connection.recv(16)
 </pre>
 <ul class="incremental simple">
-<li>The <tt class="docutils literal">connection</tt> returned by a call to <tt class="docutils literal">accept</tt> is a <strong>new socket</strong></li>
-<li>It is this <em>new</em> socket that is used for communications with the client
+<li>The <tt class="docutils literal">connection</tt> returned by a call to <tt class="docutils literal">accept</tt> is a <strong>new socket</strong>.
+This new socket is used to communicate with the client</li>
+<li>The <tt class="docutils literal">client_address</tt> is a two-tuple of IP Address and Port for the client
 socket</li>
-<li>the <tt class="docutils literal">client_address</tt> is a two-tuple of IP Address and Port for the client
-socket</li>
-<li>The number of <em>new</em> sockets that can be spun off by a listening socket is
-equal to <tt class="docutils literal">backlog</tt></li>
+<li>When a connection request is 'accepted', it is removed from the backlog
+queue.</li>
 </ul>
 </div>
 <div class="slide" id="send-a-reply">
@@ -695,12 +713,8 @@ a reply:</p>
 <pre class="literal-block">
 &gt;&gt;&gt; connection.close()
 </pre>
-<ul class="incremental simple">
-<li>Closing the connection socket will decrement the number of active sockets in
-the queue</li>
-<li>If the maximum specified by <tt class="docutils literal">backlog</tt> had been reached, this will allow a
-new connection to be made.</li>
-</ul>
+<p class="incremental">Note that the <tt class="docutils literal">server_socket</tt> is <em>never</em> closed as long as the server
+continues to run.</p>
 </div>
 <div class="slide" id="getting-the-flow">
 <h1>Getting the Flow</h1>
@@ -748,8 +762,7 @@ message:</p>
 <p>As soon as you made the connection above, you should have seen the prompt
 return in your server interpreter. The <tt class="docutils literal">accept</tt> method finally returned a
 new connection socket.</p>
-<p class="incremental">When you're ready, type the following in the <em>client</em> interpreter. Watch the
-server!</p>
+<p class="incremental">When you're ready, type the following in the <em>client</em> interpreter.</p>
 <pre class="incremental literal-block">
 &gt;&gt;&gt; client_socket.sendall(&quot;Hey, can you hear me?&quot;)
 </pre>
@@ -787,150 +800,69 @@ iterpreter):</p>
 <h1>Congratulations!</h1>
 <p class="big-centered">You've run your first client-server interaction</p>
 </div>
-<div class="slide" id="take-it-to-the-next-level">
-<h1>Take it to the Next Level</h1>
-<p>That's pretty much everything we need to build a simple echo server and
-client.</p>
-<p class="incremental">We are now going to move to writing python files.</p>
-<p class="incremental">Quit both interpreters and open a new file in your favorite text editor.  Call
-it <tt class="docutils literal">echo_client.py</tt></p>
+<div class="slide" id="homework">
+<h1>Homework</h1>
+<p>Your homework assignment for this week is to take what you've learned here
+and build a simple &quot;echo&quot; server.</p>
+<p class="incremental">The server should automatically return to any client that connects <em>exactly</em>
+what it receives (it should <strong>echo</strong> all messages).</p>
+<p class="incremental">You will also write a python script that, when run, will send a message to the
+server and receive the reply, printing it to <tt class="docutils literal">stdout</tt>.</p>
+<p class="incremental">Finally, you'll do all of this so that it can be tested.</p>
 </div>
-<div class="slide" id="the-echo-client-1">
-<h1>The Echo Client - 1</h1>
-<pre class="code python small literal-block">
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;sending: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">msg</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">usg</span> <span class="o">=</span> <span class="s">'</span><span class="se">\n</span><span class="s">usage: python echo_client.py &quot;this is my message&quot;</span><span class="se">\n</span><span class="s">'</span>
-        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">usg</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">client</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-</pre>
-<p class="incremental">Save that and try it out</p>
+<div class="slide" id="what-you-have">
+<h1>What You Have</h1>
+<p>In our class repository, there is a folder <tt class="docutils literal">assignments/session01</tt>.</p>
+<p class="incremental">Inside that folder, you should find:</p>
+<ul class="incremental simple">
+<li>A file <tt class="docutils literal">tasks.txt</tt> that contains these instructions</li>
+<li>A skeleton for your server in <tt class="docutils literal">echo_server.py</tt></li>
+<li>A skeleton for your client script in <tt class="docutils literal">echo_client.py</tt></li>
+<li>Some simple tests in <tt class="docutils literal">tests.py</tt></li>
+</ul>
+<p class="incremental">Your task is to make the tests pass.</p>
 </div>
-<div class="slide" id="check-your-work">
-<h1>Check Your Work</h1>
-<p>In your terminal, where you created and saved <tt class="docutils literal">echo_client.py</tt>:</p>
-<pre class="literal-block">
-$ python echo_client.py
-
-usage: python echo_client.py &quot;this is my message&quot;
-
-$ python echo_client.py &quot;my baloney has a first name&quot;
-sending &quot;my baloney has a first name&quot;
-</pre>
-</div>
-<div class="slide" id="the-echo-client-2">
-<h1>The Echo Client - 2</h1>
-<pre class="code python small literal-block">
-<span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">'localhost'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
-    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'connecting to </span><span class="si">%s</span><span class="s"> port </span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">server_address</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c"># Send data</span>
-        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'sending &quot;</span><span class="si">%s</span><span class="s">&quot;'</span> <span class="o">%</span> <span class="n">msg</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="c"># Look for the response</span>
-        <span class="n">amount_received</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">amount_expected</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="k">while</span> <span class="n">amount_received</span> <span class="o">&lt;</span> <span class="n">amount_expected</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-            <span class="n">amount_received</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'received &quot;</span><span class="si">%s</span><span class="s">&quot;'</span> <span class="o">%</span> <span class="n">data</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'closing socket'</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre>
-</div>
-<div class="slide" id="it-takes-two">
-<h1>It Takes Two</h1>
-<p>The client script at this point is no good without a server to receive the
-message and send it back.  Let's make that next.</p>
-<p class="incremental">Again, open a new file in your text editor.  Call it <cite>echo_server.py</cite>.</p>
-</div>
-<div class="slide" id="the-echo-server-1">
-<h1>The Echo Server - 1</h1>
-<pre class="code python small literal-block">
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="k">def</span> <span class="nf">server</span><span class="p">():</span>
-    <span class="n">address</span> <span class="o">=</span> <span class="p">(</span><span class="s">'127.0.0.1'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
-    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;making a server on </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">address</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">pass</span> <span class="c">#&lt;- what goes here comes in the next slide</span>
-    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">server</span><span class="p">()</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</pre>
-</div>
-<div class="slide" id="the-echo-server-2">
-<h1>The Echo Server - 2</h1>
-<pre class="code python small literal-block">
-<span class="k">try</span><span class="p">:</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'waiting for a connection'</span>
-        <span class="n">conn</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span> <span class="c"># blocking</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'connection - </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">addr</span>
-            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-                <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">'received &quot;</span><span class="si">%s</span><span class="s">&quot;'</span> <span class="o">%</span> <span class="n">data</span>
-                <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s">'sending data back to client'</span>
-                    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">msg</span>
-                    <span class="n">conn</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="s">'no more data from </span><span class="si">%s</span><span class="s">:</span><span class="si">%s</span><span class="s">'</span> <span class="o">%</span> <span class="n">addr</span>
-                    <span class="k">print</span> <span class="o">&gt;&gt;</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">msg</span>
-                    <span class="k">break</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-    <span class="c"># ...</span>
-</pre>
-</div>
-<div class="slide" id="playing-with-your-toy">
-<h1>Playing With Your Toy</h1>
-<p>In one terminal, start the server:</p>
-<pre class="literal-block">
+<div class="slide" id="running-the-tests">
+<h1>Running the tests</h1>
+<p>To run the tests, you'll have to set the server running in one terminal:</p>
+<pre class="small literal-block">
 $ python echo_server.py
-making a server on 127.0.0.1:10000
-waiting for a connection
 </pre>
-<p class="incremental">In a second, use the client to send a message:</p>
-<pre class="incremental literal-block">
-$ python echo_client.py &quot;I am sending a longer message.&quot;
+<div class="incremental container">
+<p>Then, in a second terminal, you will execute the tests:</p>
+<pre class="small literal-block">
+$ python tests.py
 </pre>
 </div>
-<div class="slide" id="next-steps">
-<h1>Next Steps</h1>
-<p>You've now seen the basics of socket-based communication.</p>
-<p class="incremental">In the next session, we'll learn about the protocols that govern these types
-of communications.</p>
-<p class="incremental">As an exercise, we'll extend this simple echo server into a basic HTTP
-server, and we'll be able to ditch the client and use a web browser instead.</p>
+<div class="incremental container">
+<p>You should see output like this:</p>
+<pre class="small literal-block">
+[...]
+FAILED (failures=2)
+</pre>
 </div>
-<div class="slide" id="lunch-time">
-<h1>Lunch Time</h1>
-<p class="big-centered">We'll see you back here in an hour.  Enjoy!</p>
+</div>
+<div class="slide" id="submitting-your-homework">
+<h1>Submitting Your Homework</h1>
+<p>To submit your homework:</p>
+<ul class="incremental simple">
+<li>In github, make a fork of my repository into <em>your</em> account.</li>
+<li>Clone your fork of my repository to your computer.</li>
+<li>Do your work in the <tt class="docutils literal">assignments/session01/</tt> folder on your computer and
+commit your changes to your fork.</li>
+<li>When you are finished and your tests are passing, you will open a pull
+request in github.com from your fork to mine.</li>
+</ul>
+<p class="incremental">I will review your work when I receive your pull requests, make comments on it
+there, and then close the pull request.</p>
+</div>
+<div class="slide" id="going-further">
+<h1>Going Further</h1>
+<p>In <tt class="docutils literal">assignments/session01/tasks.txt</tt> you'll find a few extra problems to try.</p>
+<p class="incremental">If you finish the first part of the homework in less than 3-4 hours give one
+or more of these a whirl.</p>
+<p class="incremental">They are not required, but if you include solutions in your pull request, I'll
+review your work.</p>
 </div>
 </div>
 </body>

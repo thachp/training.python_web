@@ -354,7 +354,7 @@ method is a callable)</p>
 <p>Let's add a really simple view to our app.</p>
 <p class="incremental">It will be a stub for our public UI.  Add this to <tt class="docutils literal">views.py</tt> in <tt class="docutils literal">myblog</tt></p>
 <pre class="code python small incremental literal-block">
-<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">Http404</span>
 
 <span class="k">def</span> <span class="nf">stub_view</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">body</span> <span class="o">=</span> <span class="s">&quot;Stub View</span><span class="se">\n\n</span><span class="s">&quot;</span>
@@ -1066,17 +1066,18 @@ input.</p>
 <pre class="code python small literal-block">
 <span class="k">def</span> <span class="nf">add_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
     <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
         <span class="k">raise</span> <span class="n">PermissionDenied</span>
     <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
         <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="n">post</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;post '</span><span class="si">%s</span><span class="s">' saved&quot;</span> <span class="o">%</span> <span class="n">post</span>
             <span class="n">messages</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">messages</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s">'blog_index'</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">messages</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s">&quot;please fix the errors below&quot;</span><span class="p">)</span>
+            <span class="n">messages</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">messages</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                                 <span class="s">&quot;please fix the errors below&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c">#...</span>
 </pre>
