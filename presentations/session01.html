@@ -606,14 +606,14 @@ repeatedly. The last bunch will be less than <tt class="docutils literal">buffer
 <div class="slide" id="putting-it-all-together">
 <h1>Putting it all together</h1>
 <p>First, connect and send a message:</p>
-<pre class="literal-block">
+<pre class="small literal-block">
 &gt;&gt;&gt; streams = [info
 ...     for info in socket.getaddrinfo('crisewing.com', 'http')
 ...     if info[1] == socket.SOCK_STREAM]
 &gt;&gt;&gt; info = streams[0]
 &gt;&gt;&gt; cewing_socket = socket.socket(*info[:3])
 &gt;&gt;&gt; cewing_socket.connect(info[-1])
-&gt;&gt;&gt; msg = &quot;GET / HTTP/1.1\r\n\r\n&quot;
+&gt;&gt;&gt; msg = &quot;GET / HTTP/1.1\r\n&quot;
 &gt;&gt;&gt; msg += &quot;Host: crisewing.com\r\n\r\n&quot;
 &gt;&gt;&gt; cewing_socket.sendall(msg)
 </pre>
@@ -631,6 +631,7 @@ repeatedly. The last bunch will be less than <tt class="docutils literal">buffer
 ...         done = True
 ...         cewing_socket.close()
 ...     response += msg_part
+...
 &gt;&gt;&gt; len(response)
 19427
 </pre>
